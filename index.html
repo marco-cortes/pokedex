@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <title>Pokedex</title>
+</head>
+
+<body id="body">
+    <div class="container">
+        <div class="header-container">
+            <div class="header">
+                <div class="logo">
+                    <img class="logo-img" src="./assets/pokeball.jpg">
+                    <h1>Pokédex</h1>
+                </div>
+            </div>
+            <div class="form">
+                <input placeholder="Ingrese un Pókemon o un número" id="pokemon">
+                <button onClick="getData()" id="button">Buscar</button>
+            </div>
+            <p id="err" class="err"></p>
+        </div>
+        <div class="card" id="card">
+            <div class="card-header">
+                <h2 class="name" id="name">charmander</h2>
+                <span class="number" id="number">#004</span>
+                <img src="./assets/pokeball.jpg" class="pokeball" alt="pokeball">
+                <div class="image">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+                        alt="charmander" class="pokeimg" id="img">
+                    <br>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="types" id="types">
+                    <p class="type">Fire</p>
+                </div>
+                <h3 class="text-color">About</h3>
+                <div class="card-info">
+                    <div class="info-item">
+                        <p class="info-text"><i class="fa-solid fa-weight-scale icon"></i> <span id="weight">8,5
+                                kg</span></p>
+                        <p class="info-title">Weight</p>
+                    </div>
+                    <hr>
+                    <div class="info-item">
+                        <p class="info-text"><i class="fa-solid fa-ruler-vertical icon"></i> <span id="height">8,6
+                                m</span></p>
+                        <p class="info-title">Height</p>
+                    </div>
+                    <hr>
+                    <div class="info-item">
+                        <ul class="list-moves" id="moves">
+                            <li class="move">Mega-Punch</li>
+                            <li class="move">Fire-Punch</li>
+                        </ul>
+                        <p class="info-title">Moves</p>
+                    </div>
+                </div>
+                <h3 class="text-color">Base Stats</h3>
+                <div class="card-stats">
+                    <ul class="title-stats">
+                        <li class="title-stat">HP</li>
+                        <li class="title-stat">ATK</li>
+                        <li class="title-stat">DEF</li>
+                        <li class="title-stat">SATK</li>
+                        <li class="title-stat">SDEF</li>
+                        <li class="title-stat">SPD</li>
+                    </ul>
+                    <hr>
+                    <ul class="list-stats">
+                        <li class="stat">
+                            <span class="progress" id="hp">039</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                        <li class="stat">
+                            <span class="progress" id="atk">052</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                        <li class="stat">
+                            <span class="progress" id="def">043</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                        <li class="stat">
+                            <span class="progress" id="satk">060</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                        <li class="stat">
+                            <span class="progress" id="sdef">050</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                        <li class="stat">
+                            <span class="progress" id="spd">065</span>
+                            <div class="stat-bar">
+                                <span class="bar"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./app.js"></script>
+    <script src="https://kit.fontawesome.com/c1cc1b3540.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
