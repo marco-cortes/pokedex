@@ -65,7 +65,7 @@ const getData = async () => {
             let newPokemon = {
                 name: pokemon.name,
                 number: pokemon.id,
-                img: pokemon.sprites.front_default,
+                img: pokemon.sprites.other.home.front_default,
                 type: pokemon.types.map(typ => typ.type.name),
                 weight: pokemon.weight / 10 + " kg",
                 height: pokemon.height / 10 + " m",
@@ -101,7 +101,7 @@ const init = async () => {
             let newPokemon = {
                 name: pokemon.name,
                 number: pokemon.id,
-                img: pokemon.sprites.front_default,
+                img: pokemon.sprites.other.home.front_default,
                 type: pokemon.types.map(typ => typ.type.name),
                 weight: pokemon.weight / 10 + " kg",
                 height: pokemon.height / 10 + " m",
