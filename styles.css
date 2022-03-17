@@ -306,11 +306,25 @@ button:hover {
 }
 
 .card-header {
+    padding: 1rem 2rem;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 1rem 3rem;
-    height: 200px
+}
+
+.image {
+    z-index: 1;
+    text-align: center;
+}
+
+.pokeimg {
+    height: 210px;
 }
 
 .name {
@@ -325,19 +339,6 @@ button:hover {
     z-index: 1;
     font-size: .9rem;
     margin-top: .6rem;
-}
-
-.image {
-    text-align: center;
-    position: absolute;
-}
-
-.pokeimg {
-    position: absolute;
-    bottom: -220px;
-    left: calc(50% + 100px);
-    height: 200px;
-    width: auto;
 }
 
 .types {
@@ -470,7 +471,7 @@ button:hover {
 
 
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
     .header-container {
         max-width: 800px;
         margin: 2rem 1rem;
@@ -488,18 +489,30 @@ button:hover {
     }
 
     .card-header {
-        padding: 2rem 2rem;
+        padding: 1rem 2rem;
         width: 800px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
     }
 
     .card-body {
         padding: 2rem 0;
         width: 600px;
     }
-
+    
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    .image {
+        z-index: 1;
+        text-align: center;
+    }
+    
     .pokeimg {
-        top: calc(-50% + 60px);
-        left: calc(-50% + 30px);
         height: 500px;
     }
 
@@ -519,12 +532,5 @@ button:hover {
 
     .types {
         margin-top: 0;
-    }
-}
-
-@media screen and (min-width: 1353px) {
-    .pokeimg {
-        left: calc(-50% + 100px);
-        
     }
 }
