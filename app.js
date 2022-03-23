@@ -220,6 +220,9 @@ const submitPokemon = async (e) => {
 }
 
 const setData = (pokemon) => {
+
+    window.history.pushState(null, null, `?pokemon=${pokemon.id}`);
+
     if (!pokemon.evolutions)
         document.getElementById("card-button-3").style.display = "none";
     else
@@ -334,6 +337,11 @@ const init = async () => {
         const list = await fetchList();
         if (list.length > 0) {
             document.getElementById("poke-list").innerHTML = list.map(pokemon => listItem(pokemon)).join(" ");
+
+            const urlParams = new URLSearchParams(window.location.search)
+            const pokemonId = urlParams.get('pokemon');
+            if(pokemonId)
+                selectPokemon(pokemonId);
         }
     } catch (err) {
         console.log(err);
