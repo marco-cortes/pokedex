@@ -106,7 +106,6 @@ body {
     font-family: var(--poppins);
     font-size: 1rem;
     background-color: var(--dark-gray);
-    transition: .3s ease-in-out;
 }
 
 .ghost {
