@@ -332,9 +332,12 @@ const repairImgList = (pokemonListFinal) => {
     return pokemonListFinal;
 }
 
+let list;
+let originalList;
 const init = async () => {
     try {
-        const list = await fetchList();
+        list = await fetchList();
+        originalList = list;
         if (list.length > 0) {
             document.getElementById("poke-list").innerHTML = list.map(pokemon => listItem(pokemon)).join(" ");
 
@@ -387,6 +390,20 @@ document.getElementById("close-button").addEventListener("click", function () {
     document.getElementById("pokemon").classList.remove("active");
     if (document.getElementsByClassName("list-item-selected").length > 0)
         document.getElementsByClassName("list-item-selected")[0].classList.remove("list-item-selected");
-})
+});
+
+document.getElementById("input").addEventListener("keyup", function (e) {
+    if(e.key === "Backspace") {
+        list = originalList;   
+    }
+    filter(list, e);
+});
+
+
+const filter = (list, e) => {
+    list = list.filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()));
+    document.getElementById("poke-list").innerHTML="";
+    document.getElementById("poke-list").innerHTML = list.map(pokemon => listItem(pokemon)).join(" ");
+}
 
 init();
