@@ -38,7 +38,7 @@ const evolution = (base, evolution) => {
                 '<div class="pokemon-evolution-types">' +
                     base.types.map((type) => {
                         return ('<img src="'+icons + type +'.webp" class="pokemon-evolution-icon" alt="'+type+'" />')
-                    }) +
+                    }).join(" ") +
                     
                 '</div>' +
             '</div>' +
@@ -49,7 +49,7 @@ const evolution = (base, evolution) => {
                 '<div class="pokemon-evolution-types">' +
                     evolution.types.map((type) => {
                         return ('<img src="'+icons + type + '.webp" class="pokemon-evolution-icon" alt="'+type+'" />')
-                    }) +
+                    }).join(" ") +
                 '</div>' +
             '</div>' +
         '</li>'

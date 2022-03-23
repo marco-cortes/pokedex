@@ -330,7 +330,6 @@ body {
     width: var(--pokelist-width);
     position: fixed;
     left: 0;
-
 }
 
 .poke-logo {
@@ -668,6 +667,7 @@ body {
     }
 
     .poke-bar {
+        position: relative;
         left: auto;
         width: 70%;
     }
