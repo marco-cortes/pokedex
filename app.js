@@ -7,66 +7,192 @@ let icons = "./assets/types/Icon_";
 const pokemonImage = (pokemon) => {
     return '<img src="' + pokemon.image + '" alt="' + pokemon.name + '" class="pokemon-main-img" />'
 }
-
+//TYPE POKEMON
 const type = (type) => {
     return (
         '<li class="pokemon-type ' + type + '"' + '> <img src="' + icons + type + '.webp" class="pokemon-type-icon" alt="si" /> ' + type + '</li>'
     );
 }
-
+//POKEMON ABILITY
 const ability = (ability) => {
     return '<li class="pokemon-abilitie">' + ability.toUpperCase() + '</li>';
 }
-
+//POKEMON STATS
 const stat = (stat) => {
     return (
         '<li class="pokemon-stat">' +
-            '<span class="pokemon-stat-value">' + stat.baseStat + '</span>' +
-            '<div class="bar">' +
-                '<span class="progress" style="width:' + stat.baseStat / 2 + '%;"></span>' +
-            '</div>' +
+        '<span class="pokemon-stat-value">' + stat.baseStat + '</span>' +
+        '<div class="bar">' +
+        '<span class="progress" style="width:' + stat.baseStat / 2 + '%;"></span>' +
+        '</div>' +
         '</li>'
     );
 }
-
+//POKEMON EVOLUTION
 const evolution = (base, evolution) => {
-    return(
+    return (
         '<li class="pokemon-evolution">' +
-            '<div class="pokemon-evolution-item">' +
-                '<span class="pokemon-evolution-name">'+base.name+'</span>' +
-                '<img src="'+base.image+'" alt="'+base.name+'" class="pokemon-evolution-img" />' +
-                '<div class="pokemon-evolution-types">' +
-                    base.types.map((type) => {
-                        return ('<img src="'+icons + type +'.webp" class="pokemon-evolution-icon" alt="'+type+'" />')
-                    }).join(" ") +
-                    
-                '</div>' +
-            '</div>' +
-            '<i class="fa-solid fa-arrow-right-long arrow"></i>' +
-            '<div class="pokemon-evolution-item">' +
-                '<span class="pokemon-evolution-name">'+evolution.name+'</span>' +
-                '<img src="'+evolution.image+'" alt="'+evolution.name+'" class="pokemon-evolution-img" />' +
-                '<div class="pokemon-evolution-types">' +
-                    evolution.types.map((type) => {
-                        return ('<img src="'+icons + type + '.webp" class="pokemon-evolution-icon" alt="'+type+'" />')
-                    }).join(" ") +
-                '</div>' +
-            '</div>' +
+        '<div class="pokemon-evolution-item">' +
+        '<span class="pokemon-evolution-name">' + base.name + '</span>' +
+        '<img src="' + base.image + '" alt="' + base.name + '" class="pokemon-evolution-img" />' +
+        '<div class="pokemon-evolution-types">' +
+        base.types.map((type) => {
+            return ('<img src="' + icons + type + '.webp" class="pokemon-evolution-icon" alt="' + type + '" />')
+        }).join(" ") +
+
+        '</div>' +
+        '</div>' +
+        '<i class="fa-solid fa-arrow-right-long arrow"></i>' +
+        '<div class="pokemon-evolution-item">' +
+        '<span class="pokemon-evolution-name">' + evolution.name + '</span>' +
+        '<img src="' + evolution.image + '" alt="' + evolution.name + '" class="pokemon-evolution-img" />' +
+        '<div class="pokemon-evolution-types">' +
+        evolution.types.map((type) => {
+            return ('<img src="' + icons + type + '.webp" class="pokemon-evolution-icon" alt="' + type + '" />')
+        }).join(" ") +
+        '</div>' +
+        '</div>' +
         '</li>'
     )
 }
-
+//POKEMON LIST ITEM
 const listItem = (pokemon) => {
     const { id, name, image } = pokemon;
     return (
         '<div class="list-item" onclick="selectPokemon(id)" id="' + id + '">' +
-            '<h3 class="list-title">' + name + '</h3>' +
-            '<div class="list-div">' +
-                '<span class="list-num">' + formatNumber(id) + '</span>' +
-                '<img class="list-img" src="' + image + '" alt="' + name + '" />' +
-            '</div>' +
+        '<h3 class="list-title">' + name + '</h3>' +
+        '<div class="list-div">' +
+        '<span class="list-num">' + formatNumber(id) + '</span>' +
+        '<img class="list-img" src="' + image + '" alt="' + name + '" />' +
+        '</div>' +
         '</div>'
     )
+}
+
+//FETCH DATA
+
+//FETCH POKEMON LIST
+const fetchList = async () => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1126`);
+    const pokemonList = await res.json();
+    let pokemonListFinal = pokemonList.results.map((pokemon) => {
+        return {
+            id: pokemon.url.split('/')[6],
+            name: pokemon.name,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.url.split('/')[6]}.png`,
+        }
+    });
+    //REPAIR LINK IMAGE
+    pokemonListFinal = repairImgList(pokemonListFinal);
+    return pokemonListFinal;
+}
+
+//FETCH POKEMON FULL DATA
+const fetchPokemon = async (id, bool) => {
+    try {
+        const data = await fetch('https://pokeapi.co/api/v2/pokemon/' + id.toLowerCase());
+        const pokemon = await data.json();
+        let pokemonEvolution = {
+            id: pokemon.id,
+            name: pokemon.name,
+            image: pokemon.sprites.other.home.front_default,
+            types: pokemon.types.map((type) => type.type.name),
+        };
+        pokemonEvolution.image = repairImgPokemon(pokemonEvolution.id, pokemonEvolution.image);
+        if(bool)
+            return pokemonEvolution;
+        const pokemonFinal = {
+            ...pokemonEvolution,
+            types: pokemon.types.map((type) => type.type.name),
+            weight: pokemon.weight / 10,
+            height: pokemon.height / 10,
+            stats: pokemon.stats.map((stat) => {
+                return {
+                    baseStat: stat.base_stat,
+                };
+            }),
+            abilities: pokemon.abilities.map((ability) => ability.ability.name),
+        };
+
+        const specieUrl = pokemon.species.url;
+
+        return { specieUrl, pokemonFinal };
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+//FETCH AND FORMAT DATA
+const fetchFullPokemon = async (id) => {
+    document.getElementById("card").classList = "pokemon-card";
+    document.getElementById("poke-img").classList = "";
+    //FETCH POKEMON
+    let { specieUrl, pokemonFinal } = await fetchPokemon(id, false);
+    document.getElementById("body").classList = pokemonFinal.types[0];
+    //FETCH ABOUT AND ALIAS
+    const specie = await fetch(specieUrl);
+    const { genera, flavor_text_entries, evolution_chain } = await specie.json();
+    //GET ALIAS
+    for(let i = 0; i < genera.length; i++) {
+        if(genera[i].language.name === "en"){
+            pokemonFinal.alias = genera[i].genus;
+            break;
+        }
+    }
+    //GET ABOUT
+    for(let i = 0; i < flavor_text_entries.length; i++) {
+        if(flavor_text_entries[i].language.name === "en"){
+            pokemonFinal.description = flavor_text_entries[i].flavor_text.split("").join(" ");
+            break;
+        }
+    }
+    //GET EVOLUTION CHAIN
+    const evolutions = await fetch(evolution_chain.url);
+    const evolutionsData = await evolutions.json();
+
+    if (evolutionsData.chain.evolves_to.length > 0) {
+        let base = evolutionsData.chain.species.name;
+        let secondEvolution = null;
+        let firstEvolution = null;
+        
+        firstEvolution = evolutionsData.chain.evolves_to.map((evolution) => {
+            if (evolution.evolves_to.length > 0) {
+                secondEvolution = evolution.evolves_to.map((e) => {
+                    return {
+                        name: e.species.name,
+                    }
+                })
+            }
+            return {
+                name: evolution.species.name,
+            };
+        });
+
+        base = await fetchPokemon(base, true);
+        firstEvolution = firstEvolution.map(async (evolution) => {
+            return await fetchPokemon(evolution.name, true);
+        })
+        if (secondEvolution) {
+            secondEvolution = secondEvolution.map(async (evolution) => {
+                return await fetchPokemon(evolution.name, true);
+            })
+        }
+
+        pokemonFinal = {
+            ...pokemonFinal,
+            evolutions: {
+                base,
+                firstEvolution: await Promise.all(firstEvolution),
+                secondEvolution: secondEvolution ? await Promise.all(secondEvolution) : null,
+            }
+        }
+    }
+
+    //GET AND FORMAT EVOLUTIONS
+    if (pokemonFinal.evolutions) {
+        
+    }
+    return pokemonFinal;
 }
 
 const formatNumber = (number) => {
@@ -98,7 +224,6 @@ const setData = (pokemon) => {
         document.getElementById("card-button-3").style.display = "none";
     else
         document.getElementById("card-button-3").style.display = "block";
-
     document.getElementById("pokemon-img").innerHTML = pokemonImage(pokemon);
     document.getElementById("pokemon-id").innerHTML = formatNumber(pokemon.id);
     document.getElementById("pokemon-name").innerHTML = pokemon.name;
@@ -112,145 +237,23 @@ const setData = (pokemon) => {
 
     if (pokemon.evolutions) {
         document.getElementById("pokemon-evolutions-1").innerHTML = pokemon.evolutions.firstEvolution.map((e) => evolution(pokemon.evolutions.base, e)).join("");
-        if(pokemon.evolutions.secondEvolution)
+        if (pokemon.evolutions.secondEvolution)
             document.getElementById("pokemon-evolutions-2").innerHTML = pokemon.evolutions.secondEvolution.map((e) => evolution(pokemon.evolutions.firstEvolution[0], e)).join("");
-        else 
+        else
             document.getElementById("pokemon-evolutions-2").innerHTML = "";
+    } else {
+        document.getElementById("pokemon-evolutions-1").innerHTML = "";
+        document.getElementById("pokemon-evolutions-2").innerHTML = "";
     }
-    
-    const items = document.getElementsByClassName("list-item-selected");
-    if (items.length > 0)
-        items[0].classList.remove("list-item-selected");
-    document.getElementById(pokemon.id).classList.add("list-item-selected");    
+    if (document.getElementsByClassName("list-item-selected").length > 0)
+        document.getElementsByClassName("list-item-selected")[0].classList.remove("list-item-selected");
+    document.getElementById(pokemon.id).classList.add("list-item-selected");
     resetCards();
-    
     document.getElementById("card").classList = "pokemon-card animate__animated animate__fadeIn";
     document.getElementById("poke-img").classList = "animate__animated animate__fadeIn";
     document.getElementById("pokemon").classList.add("active");
-    document.getElementById("body").classList = pokemon.types[0];
+
 }
-
-const fetchFullPokemon = async (id) => {
-
-    if (document.getElementById("card")) {
-        document.getElementById("card").classList = "pokemon-card";
-        document.getElementById("poke-img").classList = "";
-    }
-
-    //FETCH POKEMON
-    const { pokemon, pokemonFinal } = await fetchPokemon(id);
-
-    //FETCH ABOUT AND ALIAS
-    const specie = await fetch(pokemon.species.url);
-    const specieData = await specie.json();
-
-    //GET AND FORMAT ABOUT AND ALIAS
-    let alias = "";
-    specieData.genera.map((genus) => genus.language.name === "en" ? alias = genus.genus : null);
-    pokemonFinal.alias = alias;
-    specieData.flavor_text_entries.map((flavor) => flavor.language.name === "en" ? pokemonFinal.description = flavor.flavor_text.split("").join(" ") : null);
-
-    //FETCH EVOLUTIONS
-    const evolutions = await fetch(specieData.evolution_chain.url);
-    const evolutionsData = await evolutions.json();
-    let base = evolutionsData.chain.species.name;
-    if (evolutionsData.chain.evolves_to.length > 0) {
-        let secondEvolution;
-        let firstEvolution = evolutionsData.chain.evolves_to.map((evolution) => {
-            if (evolution.evolves_to.length > 0) {
-                secondEvolution = evolution.evolves_to.map((e) => {
-                    return {
-                        name: e.species.name,
-                    }
-                })
-            }
-            return {
-                name: evolution.species.name,
-            };
-        });
-        pokemonFinal.evolutions = {
-            base,
-            firstEvolution: firstEvolution,
-            secondEvolution: secondEvolution,
-        }
-    }
-
-    //GET AND FORMAT EVOLUTIONS
-    if (pokemonFinal.evolutions) {
-        const { pokemonEvolution } = await fetchPokemon(pokemonFinal.evolutions.base);
-        pokemonFinal.evolutions.base = pokemonEvolution;
-        const evolutions1F = pokemonFinal.evolutions.firstEvolution.map(async (evolution) => {
-            const { pokemonEvolution } = await fetchPokemon(evolution.name);
-            return pokemonEvolution;
-        })
-        pokemonFinal.evolutions.firstEvolution = await Promise.all(evolutions1F);
-        if (pokemonFinal.evolutions.secondEvolution) {
-            const evolutions2F = pokemonFinal.evolutions.secondEvolution.map(async (evolution) => {
-                const { pokemonEvolution } = await fetchPokemon(evolution.name);
-                return pokemonEvolution;
-            })
-            pokemonFinal.evolutions.secondEvolution = await Promise.all(evolutions2F);
-        }
-    }
-    return pokemonFinal;
-}
-
-
-const fetchPokemon = async (id) => {
-    try {
-        const data = await fetch('https://pokeapi.co/api/v2/pokemon/' + id.toLowerCase());
-        const pokemon = await data.json();
-
-        const pokemonFinal = {
-            id: pokemon.id,
-            name: pokemon.name,
-            image: pokemon.sprites.other.home.front_default,
-            types: pokemon.types.map((type) => type.type.name),
-            weight: pokemon.weight / 10,
-            height: pokemon.height / 10,
-            stats: pokemon.stats.map((stat) => {
-                return {
-                    baseStat: stat.base_stat,
-                };
-            }),
-            abilities: pokemon.abilities.map((ability) => ability.ability.name),
-        };
-
-        //CORRECCIÓN DE IMÁGENES
-        pokemonFinal.image = repairImgPokemon(pokemonFinal.id, pokemonFinal.image);
-
-        const pokemonEvolution = {
-            id: pokemonFinal.id,
-            name: pokemonFinal.name,
-            image: pokemonFinal.image,
-            types: pokemonFinal.types
-        }
-
-        return { pokemon, pokemonFinal, pokemonEvolution };
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-
-const fetchList = async () => {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1126`);
-    const pokemonList = await res.json();
-    let pokemonListFinal = pokemonList.results.map((pokemon) => {
-        return {
-            id: pokemon.url.split('/')[6],
-            name: pokemon.name,
-            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.url.split('/')[6]}.png`,
-        }
-    });
-
-    //CORRECCIÓN DE IMÁGENES
-    pokemonListFinal = repairImgList(pokemonListFinal);
-    return pokemonListFinal;
-}
-
-
 const repairImgPokemon = (id, image) => {
     switch (id) {
         case 718: case 10093: case 10128: case 10129: case 10146: case 10149: case 10150:
@@ -270,7 +273,6 @@ const repairImgPokemon = (id, image) => {
             return image;
     }
 }
-
 
 const repairImgList = (pokemonListFinal) => {
     pokemonListFinal[717].image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/718.png";
@@ -327,7 +329,6 @@ const repairImgList = (pokemonListFinal) => {
     return pokemonListFinal;
 }
 
-
 const init = async () => {
     try {
         const list = await fetchList();
@@ -358,34 +359,25 @@ const buttons = document.getElementsByClassName("pokemon-card-button");
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function (e) {
         const items = document.getElementsByClassName("pokemon-card-button");
-        let item = 0;
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.remove("pokemon-card-button-active");
-            if (items[i] === e.target)
-                item = i;
-        }
-
         const cards = document.getElementsByClassName("pokemon-card-item");
-
         for (let i = 0; i < cards.length; i++) {
             cards[i].classList.remove("pokemon-card-item-active");
         }
-
-        cards[item].classList.add("pokemon-card-item-active");
-
-        e.target.classList.add("pokemon-card-button-active");
+        for (let i = 0; i < items.length; i++) {
+            items[i].classList.remove("pokemon-card-button-active");
+            if (items[i] === e.target) {
+                cards[i].classList.add("pokemon-card-item-active");
+                e.target.classList.add("pokemon-card-button-active");
+            }
+        }
     })
 }
 
 
 document.getElementById("close-button").addEventListener("click", function () {
-
     document.getElementById("pokemon").classList.remove("active");
-    const items = document.getElementsByClassName("list-item-selected");
-    if (items.length > 0)
-      items[0].classList.remove("list-item-selected");
-
-    
+    if (document.getElementsByClassName("list-item-selected").length > 0)
+        document.getElementsByClassName("list-item-selected")[0].classList.remove("list-item-selected");
 })
 
 init();
