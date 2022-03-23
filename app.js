@@ -340,9 +340,10 @@ const init = async () => {
 
             const urlParams = new URLSearchParams(window.location.search)
             const pokemonId = urlParams.get('pokemon');
-            if(pokemonId)
+            if(pokemonId) {
                 selectPokemon(pokemonId);
-        }
+                document.getElementById(pokemonId).scrollIntoView();
+            }        }
     } catch (err) {
         console.log(err);
     }
