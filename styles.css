@@ -354,7 +354,7 @@ body {
     justify-content: space-between;
     cursor: pointer;
     transition: 0.1s ease-in-out;
-    color: var(--main-color);
+    color: var(--white);
     margin: .5rem 0;
 }
 
