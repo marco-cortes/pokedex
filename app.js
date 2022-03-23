@@ -104,6 +104,7 @@ const setData = (pokemon) => {
     document.getElementById("pokemon-name").innerHTML = pokemon.name;
     document.getElementById("pokemon-alias").innerHTML = "The " + pokemon.alias;
     document.getElementById("pokemon-types").innerHTML = pokemon.types.map((t) => type(t)).join("");
+    document.getElementById("pokemon-desc").innerHTML = pokemon.description;
     document.getElementById("pokemon-weight").innerHTML = pokemon.weight + " kg";
     document.getElementById("pokemon-height").innerHTML = pokemon.height + " m";
     document.getElementById("pokemon-stats").innerHTML = pokemon.stats.map((s) => stat(s)).join("");
