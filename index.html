@@ -11,118 +11,200 @@
         rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Pokedex</title>
 </head>
 
 <body id="body">
     <div class="container">
-        <div class="header-container">
-            <div class="header">
-                <div class="logo">
-                    <img class="logo-img" src="./assets/pokeball.jpg">
-                    <h1>Pokédex</h1>
-                </div>
+        <div class="poke-bar">
+            <div class="poke-form">
+                <a href="./" class="poke-logo">
+                    <img src="/assets/pokeball.jpg" alt="img-logo" class="img-logo" />
+                    <h1 class="text-logo">Pokédex</h1>
+                </a>
+                <form onsubmit="submitPokemon(event)" class="form-group">
+                    <div class="form">
+                        <input type="text" placeholder="Search for a Pokemon" id="input" class="input">
+                        <button type="submit" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                    </div>
+                </form>
             </div>
-            <div class="form">
-                <input placeholder="Ingrese un Pókemon o un número" id="pokemon">
-                <button onClick="getData()" id="button">Buscar</button>
-            </div>
-            <p id="err" class="err"></p>
+            <div class="poke-list" id="poke-list"></div>
         </div>
-        <div class="card" id="card">
-            <div class="card-header">
-                <div class="title">
-                    <h2 class="name" id="name">charmander</h2>
-                    <span class="number" id="number">#004</span>
-                </div>
-                <img src="./assets/pokeball.jpg" class="pokeball" alt="pokeball">
-                <div class="image">
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
-                        alt="charmander" class="pokeimg" id="img">
-                    <br>
-                </div>
+        <div class="pokemon" id="pokemon">
+            <div class="pokemon-button" id="close-button">
+                <i class="fa-solid fa-xmark close-icon"></i>
             </div>
-            <div class="card-body">
-                <div class="types" id="types">
-                    <p class="type">Fire</p>
+            <div id="poke-img">
+                <div class="pokemon-img-div" id="pokemon-img"></div>
+                <h3 class="pokemon-id" id="pokemon-id"></h3>
+                <h2 class="pokemon-name" id="pokemon-name"></h2>
+                <span class="pokemon-alias" id="pokemon-alias"></span>
+                <ul class="pokemon-types" id="pokemon-types"></ul>
+            </div>
+            <div class="pokemon-card" id="card">
+                <div class="pokemon-card-buttons" id="card-buttons">
+                    <div class="pokemon-card-button pokemon-card-button-active" id="card-button-1">About</div>
+                    <div class="pokemon-card-button" id="card-button-2">Stats</div>
+                    <div class="pokemon-card-button" id="card-button-3">Evolutions</div>
                 </div>
-                <h3 class="text-color">About</h3>
-                <div class="card-info">
-                    <div class="info-item">
-                        <p class="info-text"><i class="fa-solid fa-weight-scale icon"></i> <span id="weight">8,5
-                                kg</span></p>
-                        <p class="info-title">Weight</p>
+                <div class="pokemon-card-item" id="pokemon-card-1">
+                    <h4 class="poke-text">About</h4>
+                    <p class="pokemon-desc" id="pokemon-desc"></p>
+                    <div class="pokemon-about">
+                        <div class="pokemon-about-item">
+                            <p class="pokemon-about-p">
+                                <i class="fa-solid fa-weight-scale pokemon-about-icon"></i>
+                                <span class="pokemon-about-value" id="pokemon-weight"></span>
+                            </p>
+                            <p class="pokemon-about-title">Weight</p>
+                        </div>
+                        <div class="pokemon-about-item">
+                            <p class="pokemon-about-p">
+                                <i class="fa-solid fa-ruler-vertical pokemon-about-icon"></i>
+                                <span class="pokemon-about-value" id="pokemon-height"></span>
+                            </p>
+                            <p class="pokemon-about-title">Heigth</p>
+                        </div>
                     </div>
-                    <hr>
-                    <div class="info-item">
-                        <p class="info-text"><i class="fa-solid fa-ruler-vertical icon"></i> <span id="height">8,6
-                                m</span></p>
-                        <p class="info-title">Height</p>
-                    </div>
-                    <hr>
-                    <div class="info-item">
-                        <ul class="list-moves" id="moves">
-                            <li class="move">Mega-Punch</li>
-                            <li class="move">Fire-Punch</li>
+                    <h4 class="poke-text">Abilities</h4>
+                    <ul class="pokemon-abilities" id="pokemon-abilities"></ul>
+                </div>
+                <div class="pokemon-card-item" id="pokemon-card-2">
+                    <h4 class="poke-text">Stats</h4>
+                    <div class="pokemon-stats">
+                        <ul class="pokemon-stats-titles">
+                            <li class="pokemon-stat-title">HP</li>
+                            <li class="pokemon-stat-title">ATK</li>
+                            <li class="pokemon-stat-title">DEF</li>
+                            <li class="pokemon-stat-title">SATK</li>
+                            <li class="pokemon-stat-title">SDEF</li>
+                            <li class="pokemon-stat-title">SPD</li>
                         </ul>
-                        <p class="info-title">Moves</p>
+                        <hr />
+                        <ul class="pokemon-stats-values" id="pokemon-stats"></ul>
                     </div>
                 </div>
-                <h3 class="text-color">Base Stats</h3>
-                <div class="card-stats">
-                    <ul class="title-stats">
-                        <li class="title-stat">HP</li>
-                        <li class="title-stat">ATK</li>
-                        <li class="title-stat">DEF</li>
-                        <li class="title-stat">SATK</li>
-                        <li class="title-stat">SDEF</li>
-                        <li class="title-stat">SPD</li>
-                    </ul>
-                    <hr>
-                    <ul class="list-stats">
-                        <li class="stat">
-                            <span class="progress" id="hp">039</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                        <li class="stat">
-                            <span class="progress" id="atk">052</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                        <li class="stat">
-                            <span class="progress" id="def">043</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                        <li class="stat">
-                            <span class="progress" id="satk">060</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                        <li class="stat">
-                            <span class="progress" id="sdef">050</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                        <li class="stat">
-                            <span class="progress" id="spd">065</span>
-                            <div class="stat-bar">
-                                <span class="bar"></span>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="pokemon-card-item" id="pokemon-card-3">
+                    <h4 class="poke-text">Evolutions</h4>
+                    <ul class="pokemon-evolutions" id="pokemon-evolutions-1"></ul>
+                    <ul class="pokemon-evolutions" id="pokemon-evolutions-2"></ul>
                 </div>
             </div>
+            <div class="pokeball-div" id="pokeball">
+                <img src="assets/pokeball.jpg" alt="pokeball" class="pokeball" />
+            </div>
         </div>
-    </div>
-    <script src="./app.js"></script>
-    <script src="https://kit.fontawesome.com/c1cc1b3540.js" crossorigin="anonymous"></script>
+
+        <script src="./app.js"></script>
+        <script src="https://kit.fontawesome.com/c1cc1b3540.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+
+<!--
+
+    <div class="pokemon-card-item" id="pokemon-card-3">
+                    <h4 class="poke-text">Evolutions</h4>
+                        <ul class="pokemon-evolutions">
+                            {
+                            pokemon.evolutions.firstEvolution.map((evolution, index) => {
+                            return (
+                            <li key={index} class="pokemon-evolution">
+                                <div class="pokemon-evolution-item">
+                                    <span
+                                        class="pokemon-evolution-name">{pokemon.evolutions.base.name.charAt(0).toUpperCase()
+                                        + pokemon.evolutions.base.name.slice(1)}</span>
+                                    <img src={pokemon.evolutions.base.image} alt={pokemon.evolutions.base.name}
+                                        class="pokemon-evolution-img" />
+                                    <div class="pokemon-evolution-types">
+                                        {
+                                        pokemon.evolutions.base.types.map((type, index) => {
+                                        return (
+                                        <img src={icons("./Icon_" + type + ".webp" )} class="pokemon-evolution-icon"
+                                            alt={type} key={index} />
+                                        )
+                                        })
+                                        }
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right-long arrow"></i>
+                                <div class="pokemon-evolution-item">
+                                    <span class="pokemon-evolution-name">{evolution.name.charAt(0).toUpperCase() +
+                                        evolution.name.slice(1)}</span>
+                                    <img src={evolution.image} alt={evolution.name} class="pokemon-evolution-img" />
+                                    <div class="pokemon-evolution-types">
+                                        {
+                                        evolution.types.map((type, index) => {
+                                        return (
+                                        <img src={icons("./Icon_" + type + ".webp" )} class="pokemon-evolution-icon"
+                                            alt={type} key={index} />
+                                        )
+                                        })
+                                        }
+                                    </div>
+                                </div>
+                            </li>
+                            )
+                            })
+                            }
+                        </ul>
+                        {
+                        pokemon.evolutions.secondEvolution ?
+                        <>
+                            <ul class="pokemon-evolutions">
+                                {
+                                pokemon.evolutions.secondEvolution.map((evolution, index) => {
+                                return (
+                                <li key={index} class="pokemon-evolution">
+                                    <div class="pokemon-evolution-item">
+                                        <span
+                                            class="pokemon-evolution-name">{pokemon.evolutions.firstEvolution[0].name.charAt(0).toUpperCase()
+                                            + pokemon.evolutions.firstEvolution[0].name.slice(1)}</span>
+                                        <img src={pokemon.evolutions.firstEvolution[0].image}
+                                            alt={pokemon.evolutions.firstEvolution[0].name}
+                                            class="pokemon-evolution-img" />
+                                        <div class="pokemon-evolution-types">
+                                            {
+                                            pokemon.evolutions.firstEvolution[0].types.map((type, index) => {
+                                            return (
+                                            <img src={icons("./Icon_" + type + ".webp" )}
+                                                class="pokemon-evolution-icon" alt={type} key={index} />
+                                            )
+                                            })
+                                            }
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right-long arrow"></i>
+                                    <div class="pokemon-evolution-item">
+                                        <span class="pokemon-evolution-name">{evolution.name.charAt(0).toUpperCase()
+                                            + evolution.name.slice(1)}</span>
+                                        <img src={evolution.image} alt={evolution.name}
+                                            class="pokemon-evolution-img" />
+                                        <div class="pokemon-evolution-types">
+                                            {
+                                            evolution.types.map((type, index) => {
+                                            return (
+                                            <img src={icons("./Icon_" + type + ".webp" )}
+                                                class="pokemon-evolution-icon" alt={type} key={index} />
+                                            )
+                                            })
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                                )
+                                })
+                                }
+                            </ul>
+                        </> : <></>
+                        }
+                    </>
+                    : <></>
+                    }
+                </div>
+            </div>
+            </> :
+-->
