@@ -94,6 +94,8 @@ const submitPokemon = async (e) => {
 }
 
 const setData = (pokemon) => {
+    document.getElementById("body").classList = pokemon.types[0];
+
     if (!pokemon.evolutions)
         document.getElementById("card-button-3").style.display = "none";
     else
@@ -116,20 +118,16 @@ const setData = (pokemon) => {
         else 
             document.getElementById("pokemon-evolutions-2").innerHTML = "";
     }
-
-
-
-    document.getElementById("body").classList = pokemon.types[0];
+    
     const items = document.getElementsByClassName("list-item-selected");
     if (items.length > 0)
         items[0].classList.remove("list-item-selected");
-    document.getElementById(pokemon.id).classList.add("list-item-selected");
-
+    document.getElementById(pokemon.id).classList.add("list-item-selected");    
+    resetCards();
+    
     document.getElementById("card").classList = "pokemon-card animate__animated animate__fadeIn";
     document.getElementById("poke-img").classList = "animate__animated animate__fadeIn";
     document.getElementById("pokemon").classList.add("active");
-
-    resetCards();
 }
 
 const fetchFullPokemon = async (id) => {
