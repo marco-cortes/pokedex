@@ -447,6 +447,7 @@ body {
     border-radius: 30px;
     display: none;
     flex-direction: column;
+    justify-content: space-between;
     min-width: 500px;
     min-height: 600px;
 }
@@ -548,7 +549,7 @@ body {
 
 .pokemon-stats-values {
     display: block;
-    width: 100%;
+    width: 83%;
 }
 
 .pokemon-stat {
@@ -606,7 +607,7 @@ body {
 
 .pokemon-evolution-img {
     width: 100px;
-    background-color: var(--main-color-light);
+    background-color: var(--main-color);
     border-radius: 50%;
 }
 

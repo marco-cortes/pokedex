@@ -45,9 +45,9 @@
             </div>
             <div class="pokemon-card" id="card">
                 <div class="pokemon-card-buttons" id="card-buttons">
-                    <div class="pokemon-card-button pokemon-card-button-active" id="card-button-1">About</div>
-                    <div class="pokemon-card-button" id="card-button-2">Stats</div>
-                    <div class="pokemon-card-button" id="card-button-3">Evolutions</div>
+                    <div class="pokemon-card-button pokemon-card-button-active" id="card-button-1"><i class="fa-solid fa-circle-info"></i> About</div>
+                    <div class="pokemon-card-button" id="card-button-2"><i class="fa-solid fa-chart-simple"></i> Stats</div>
+                    <div class="pokemon-card-button" id="card-button-3"><i class="fa-solid fa-dragon"></i> Evolutions</div>
                 </div>
                 <div class="pokemon-card-item" id="pokemon-card-1">
                     <h4 class="poke-text">About</h4>
@@ -100,111 +100,4 @@
         <script src="./app.js"></script>
         <script src="https://kit.fontawesome.com/c1cc1b3540.js" crossorigin="anonymous"></script>
 </body>
-
 </html>
-
-
-<!--
-
-    <div class="pokemon-card-item" id="pokemon-card-3">
-                    <h4 class="poke-text">Evolutions</h4>
-                        <ul class="pokemon-evolutions">
-                            {
-                            pokemon.evolutions.firstEvolution.map((evolution, index) => {
-                            return (
-                            <li key={index} class="pokemon-evolution">
-                                <div class="pokemon-evolution-item">
-                                    <span
-                                        class="pokemon-evolution-name">{pokemon.evolutions.base.name.charAt(0).toUpperCase()
-                                        + pokemon.evolutions.base.name.slice(1)}</span>
-                                    <img src={pokemon.evolutions.base.image} alt={pokemon.evolutions.base.name}
-                                        class="pokemon-evolution-img" />
-                                    <div class="pokemon-evolution-types">
-                                        {
-                                        pokemon.evolutions.base.types.map((type, index) => {
-                                        return (
-                                        <img src={icons("./Icon_" + type + ".webp" )} class="pokemon-evolution-icon"
-                                            alt={type} key={index} />
-                                        )
-                                        })
-                                        }
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-arrow-right-long arrow"></i>
-                                <div class="pokemon-evolution-item">
-                                    <span class="pokemon-evolution-name">{evolution.name.charAt(0).toUpperCase() +
-                                        evolution.name.slice(1)}</span>
-                                    <img src={evolution.image} alt={evolution.name} class="pokemon-evolution-img" />
-                                    <div class="pokemon-evolution-types">
-                                        {
-                                        evolution.types.map((type, index) => {
-                                        return (
-                                        <img src={icons("./Icon_" + type + ".webp" )} class="pokemon-evolution-icon"
-                                            alt={type} key={index} />
-                                        )
-                                        })
-                                        }
-                                    </div>
-                                </div>
-                            </li>
-                            )
-                            })
-                            }
-                        </ul>
-                        {
-                        pokemon.evolutions.secondEvolution ?
-                        <>
-                            <ul class="pokemon-evolutions">
-                                {
-                                pokemon.evolutions.secondEvolution.map((evolution, index) => {
-                                return (
-                                <li key={index} class="pokemon-evolution">
-                                    <div class="pokemon-evolution-item">
-                                        <span
-                                            class="pokemon-evolution-name">{pokemon.evolutions.firstEvolution[0].name.charAt(0).toUpperCase()
-                                            + pokemon.evolutions.firstEvolution[0].name.slice(1)}</span>
-                                        <img src={pokemon.evolutions.firstEvolution[0].image}
-                                            alt={pokemon.evolutions.firstEvolution[0].name}
-                                            class="pokemon-evolution-img" />
-                                        <div class="pokemon-evolution-types">
-                                            {
-                                            pokemon.evolutions.firstEvolution[0].types.map((type, index) => {
-                                            return (
-                                            <img src={icons("./Icon_" + type + ".webp" )}
-                                                class="pokemon-evolution-icon" alt={type} key={index} />
-                                            )
-                                            })
-                                            }
-                                        </div>
-                                    </div>
-                                    <i class="fa-solid fa-arrow-right-long arrow"></i>
-                                    <div class="pokemon-evolution-item">
-                                        <span class="pokemon-evolution-name">{evolution.name.charAt(0).toUpperCase()
-                                            + evolution.name.slice(1)}</span>
-                                        <img src={evolution.image} alt={evolution.name}
-                                            class="pokemon-evolution-img" />
-                                        <div class="pokemon-evolution-types">
-                                            {
-                                            evolution.types.map((type, index) => {
-                                            return (
-                                            <img src={icons("./Icon_" + type + ".webp" )}
-                                                class="pokemon-evolution-icon" alt={type} key={index} />
-                                            )
-                                            })
-                                            }
-                                        </div>
-                                    </div>
-                                </li>
-                                )
-                                })
-                                }
-                            </ul>
-                        </> : <></>
-                        }
-                    </>
-                    : <></>
-                    }
-                </div>
-            </div>
-            </> :
--->
