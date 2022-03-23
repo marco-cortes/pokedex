@@ -187,11 +187,6 @@ const fetchFullPokemon = async (id) => {
             }
         }
     }
-
-    //GET AND FORMAT EVOLUTIONS
-    if (pokemonFinal.evolutions) {
-        
-    }
     return pokemonFinal;
 }
 
