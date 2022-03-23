@@ -431,6 +431,12 @@ body {
     min-height: 600px;
 }
 
+.pokemon-card-item-active #pokemon-card-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .active .pokemon-card {
     display: flex;
 }
@@ -440,7 +446,7 @@ body {
     height: 100% !important;
     opacity: 1 !important;
     order: 1 !important;
-    margin: auto .5rem !;
+    margin: auto .5rem !important;
 }
 
 .pokemon-card-item {
