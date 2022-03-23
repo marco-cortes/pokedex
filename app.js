@@ -401,7 +401,10 @@ document.getElementById("input").addEventListener("keyup", function (e) {
 
 
 const filter = (list, e) => {
-    list = list.filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()));
+    list = [
+        ...list.filter(pokemon => pokemon.id.toString().includes(e.target.value)),
+        ...list.filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    ];
     document.getElementById("poke-list").innerHTML="";
     document.getElementById("poke-list").innerHTML = list.map(pokemon => listItem(pokemon)).join(" ");
 }
